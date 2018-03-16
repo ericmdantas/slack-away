@@ -123,7 +123,7 @@ func mightReplyToConversation(client *slack.Client, rtm *slack.RTM, ev *slack.Me
 	result := rand.Intn(max) % div	
 	shouldInteract := result == 0
 	
-	fmt.Printf("Checking if there should be an interaction, %d possible numbers with %f.2 chance of happening -- result: %f.2, should interact: %t\n", max, max /div, result, shouldInteract)
+	fmt.Printf("%d possible numbers with %d chance of happening -- result: %f (has to be zero), should interact: %t\n", max, max / div, result, shouldInteract)
 	
 	if shouldInteract {
 		log.Println("------------> Should interact with someone")
@@ -163,7 +163,7 @@ func caseInsensitiveContains(s, substr string) bool {
 }
 
 func main() {
-	client := slack.New(token)
+	client := slack.New(os.Getenv("SLACK_BOT_AWAY_TOKEN"))
 	logger := log.New(os.Stdout, "slack-bot-away: ", log.Lshortfile|log.LstdFlags)
 	slack.SetLogger(logger)
 	client.SetDebug(true)
