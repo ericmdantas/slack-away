@@ -13,7 +13,7 @@ import (
 const (
 	botID    = "U9N01EY01"
 	botIDMsg = "<@U9N01EY01>"
-	timeIdle = 5 * time.Minute
+	timeIdle = 2 * time.Minute
 )
 
 var (
