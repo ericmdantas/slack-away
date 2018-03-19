@@ -28,15 +28,7 @@ func Start() {
 		switch ev := msg.Data.(type) {
 		case *slack.MessageEvent:
 			go mightCreateNewConversationAfterTime(client, rtm, ev)
-
-			for _, trigger := range wordsThatTriggerReply {
-				if caseInsensitiveContains(ev.Text, trigger) {
-					replyToUser(rtm, ev)
-					break
-				} else {
-					mightReplyToConversation(client, rtm, ev)
-				}
-			}
+			replyOrStartNewConversation(client, rtm, ev)
 
 		case *slack.RTMError:
 			fmt.Printf("Error: %s\n", ev.Error())
@@ -44,8 +36,17 @@ func Start() {
 		case *slack.InvalidAuthEvent:
 			fmt.Printf("Invalid credentials")
 			return
+		}
+	}
+}
 
-		default:
+func replyOrStartNewConversation(client *slack.Client, rtm *slack.RTM, ev *slack.MessageEvent) {
+	for _, trigger := range wordsThatTriggerReply {
+		if caseInsensitiveContains(ev.Text, trigger) {
+			replyToUser(rtm, ev)
+			break
+		} else {
+			mightReplyToConversation(client, rtm, ev)
 		}
 	}
 }
