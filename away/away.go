@@ -15,6 +15,10 @@ const (
 	botIDMsg = "<@U9N01EY01>"
 )
 
+var (
+	tickerChannelIdle = time.NewTicker(2 * time.Minute)
+)
+
 func Start() {
 	client := slack.New(os.Getenv("SLACK_BOT_AWAY_TOKEN"))
 	logger := log.New(os.Stdout, "slack-bot-away: ", log.Lshortfile|log.LstdFlags)
@@ -64,9 +68,7 @@ func replyToUser(rtm *slack.RTM, ev *slack.MessageEvent) {
 }
 
 func mightCreateNewConversationAfterTime(client *slack.Client, rtm *slack.RTM, ev *slack.MessageEvent) {
-	ticker := time.NewTicker(1 * time.Minute)
-
-	for range ticker.C {
+	for range tickerChannelIdle.C {
 		log.Println("Channel is idle, might reply to conversation")
 		mightReplyToConversation(client, rtm, ev)
 	}
