@@ -110,7 +110,7 @@ func mightReplyToConversation(client *slack.Client, rtm *slack.RTM, ev *slack.Me
 
 		log.Printf("------------> Interacting with %s\n", user.Name)
 
-		msg := fmt.Sprintf("<@%s> %s", user.ID, freeOffenses[rand.Intn(len(freeOffenses))])
+		msg := fmt.Sprintf("%s %s", formatUser(user.ID), freeOffenses[rand.Intn(len(freeOffenses))])
 		rtm.SendMessage(rtm.NewOutgoingMessage(msg, ev.Channel))
 	}
 }
