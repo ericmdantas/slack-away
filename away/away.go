@@ -13,7 +13,7 @@ import (
 const (
 	botID    = "U9N01EY01"
 	botIDMsg = "<@U9N01EY01>"
-	timeIdle = 1 * time.Minute
+	timeIdle = 5 * time.Minute
 )
 
 var (
@@ -75,8 +75,8 @@ func mightCreateNewConversationAfterTime(client *slack.Client, rtm *slack.RTM, e
 
 func mightReplyToConversation(client *slack.Client, rtm *slack.RTM, ev *slack.MessageEvent) {
 	rand.Seed(time.Now().UnixNano())
-	max := 999
-	div := 333
+	max := 99
+	div := 57
 	result := rand.Intn(max) % div
 	shouldInteract := result == 0
 
