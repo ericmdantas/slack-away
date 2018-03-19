@@ -13,10 +13,11 @@ import (
 const (
 	botID    = "U9N01EY01"
 	botIDMsg = "<@U9N01EY01>"
+	timeIdle = 3 * time.Minute
 )
 
 var (
-	tickerChannelIdle = time.NewTicker(2 * time.Minute)
+	tickerChannelIdle = time.NewTicker(timeIdle)
 )
 
 func Start() {
@@ -31,6 +32,7 @@ func Start() {
 	for msg := range rtm.IncomingEvents {
 		switch ev := msg.Data.(type) {
 		case *slack.MessageEvent:
+			tickerChannelIdle.Stop()
 			go mightCreateNewConversationAfterTime(client, rtm, ev)
 			replyOrStartNewConversation(client, rtm, ev)
 
@@ -68,6 +70,8 @@ func replyToUser(rtm *slack.RTM, ev *slack.MessageEvent) {
 }
 
 func mightCreateNewConversationAfterTime(client *slack.Client, rtm *slack.RTM, ev *slack.MessageEvent) {
+	tickerChannelIdle = time.NewTicker(timeIdle)
+
 	for range tickerChannelIdle.C {
 		log.Println("Channel is idle, might reply to conversation")
 		mightReplyToConversation(client, rtm, ev)
