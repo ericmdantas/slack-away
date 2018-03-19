@@ -10,6 +10,10 @@ var (
 		"porra",
 		"smith",
 		"legal",
+		"cocô",
+		"pinto mole",
+		"minigame",
+		"transando",
 		"Boa sorte e que os jogos comecem", // jigsaw
 		"Poucos builds hoje.",              // cumulo.nimbus
 		"Lamento por ter que ler isto",     // cumulo.nimbus
