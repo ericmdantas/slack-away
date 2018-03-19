@@ -10,12 +10,10 @@ func caseInsensitiveContains(s, substr string) bool {
 	return strings.Contains(s, substr)
 }
 
-func formatUser(user string) string {
-	userFormatted := fmt.Sprintf("<@%s>", user)
+func formatUser(user *string) {
+	*user = fmt.Sprintf("<@%s>", *user)
 
-	if userFormatted == "<@>" {
-		userFormatted = ""
+	if *user == "<@>" {
+		*user = ""
 	}
-
-	return userFormatted
 }
