@@ -79,14 +79,14 @@ func mightReplyToConversation(client *slack.Client, rtm *slack.RTM, ev *slack.Me
 	result := rand.Intn(max) % div
 	shouldInteract := result == 0
 
-	fmt.Printf("interact: %t -- %d possible numbers with %d chance of happening -- result: %d\n", shouldInteract, max, max/div, result)
+	fmt.Printf("----> interact: %t -- %d possible numbers with %d chance of happening -- result: %d\n", shouldInteract, max, max/div, result)
 
 	if shouldInteract {
-		log.Println("------------> Should interact with someone")
+		log.Println("---------> Should interact with someone")
 
 		channel, err := client.GetChannelInfo(ev.Channel)
 
-		log.Printf("------------> Interacting with channel: %s\n", channel.Name)
+		log.Printf("----------> Interacting with channel: %s\n", channel.Name)
 
 		if err != nil {
 			fmt.Printf("Error retrieving channel info: %s\n", err.Error())

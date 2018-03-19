@@ -7,6 +7,7 @@ var (
 		"petropolis",
 		"brother",
 		"ronaldinho",
+		"porra",
 		"smith",
 		"legal",
 		"Boa sorte e que os jogos comecem", // jigsaw
