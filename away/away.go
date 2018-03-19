@@ -62,10 +62,8 @@ func replyToUser(rtm *slack.RTM, ev *slack.MessageEvent) {
 		return
 	}
 
-	formatUser(&ev.User)
-
 	rand.Seed(time.Now().UnixNano())
-	msg := fmt.Sprintf("%s %s", ev.User, freeOffenses[rand.Intn(len(freeOffenses))])
+	msg := fmt.Sprintf("%s %s", formatUser(ev.User), freeOffenses[rand.Intn(len(freeOffenses))])
 	rtm.SendMessage(rtm.NewOutgoingMessage(msg, ev.Channel))
 }
 
