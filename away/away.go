@@ -104,6 +104,21 @@ func mightReplyToConversation(client *slack.Client, rtm *slack.RTM, ev *slack.Me
 			fmt.Printf("Error retrieving user info: %s\n", err.Error())
 			return
 		}
+		
+		if user.ID == "" {
+			return
+		}
+		
+		userPresence, err := client.GetUserPresence(user.ID)
+		
+		if err != nil {
+			fmt.Printf("Error retrieving the user presense: %s\n", err.Error())
+		}
+		
+		if userPresence.Presence != "active" {
+			log.Printf("------------> NOT interacting with %s - offline \n", user.Name)
+			return 
+		}
 
 		log.Printf("------------> Interacting with %s\n", user.Name)
 
