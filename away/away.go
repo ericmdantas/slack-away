@@ -22,16 +22,15 @@ var (
 
 func Start() {
 	client := slack.New(os.Getenv("SLACK_BOT_AWAY_TOKEN"))
-	logger := log.New(os.Stdout, "slack-bot-away: ", log.Lshortfile|log.LstdFlags)
-	slack.SetLogger(logger)
-	client.SetDebug(true)
-
 	rtm := client.NewRTM()
 	go rtm.ManageConnection()
+	
+	log.Println("away: alive!")
 
 	for msg := range rtm.IncomingEvents {
 		switch ev := msg.Data.(type) {
 		case *slack.MessageEvent:
+			log.Printf("%s <@%s>: %s", ev.Username, ev.User, ev.Text)
 			go mightCreateNewConversationAfterTime(client, rtm, ev)
 			replyOrStartNewConversation(client, rtm, ev)
 
